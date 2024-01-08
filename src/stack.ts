@@ -1,6 +1,6 @@
 import { Stack, StackProps } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
-import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
+import { NodejsFunction, OutputFormat } from "aws-cdk-lib/aws-lambda-nodejs";
 import { Construct } from "constructs";
 
 export class AppStack extends Stack {
@@ -10,6 +10,16 @@ export class AppStack extends Stack {
     new NodejsFunction(this, "handler", {
       entry: "./dist/handler.js",
       runtime: Runtime.NODEJS_20_X,
+      bundling: {
+        minify: true,
+        sourceMap: true,
+        target: "es2022",
+        format: OutputFormat.ESM,
+      },
+      environment: {
+        NODE_OPTIONS: "--enable-source-maps",
+        NODE_ENV: "production",
+      },
     });
   }
 }
