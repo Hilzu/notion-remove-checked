@@ -7,17 +7,17 @@
   "license": "UNLICENSED",
   "type": "module",
   "engines": {
-    "node": ">=21.5.0"
+    "node": ">=20.10.0"
   },
   "scripts": {
     "build": "npm run clean && npm run tsc",
-    "clean": "rm -rf dist",
-    "dev": "npm run build && (npm run tsc:watch & npm run start:dev)",
+    "clean": "rm -rf dist node_modules/.cache",
+    "dev": "npm run build && npm run tsc:watch",
     "format": "npm run prettier -- --write",
     "lint": "eslint .",
     "prettier": "prettier --ignore-path .gitignore .",
-    "start": "node --enable-source-maps .",
-    "start:dev": "node --enable-source-maps --watch --watch-preserve-output .",
+    "start": "",
+    "start:cdk": "node --enable-source-maps dist/cdk-app.js",
     "test": "npm run lint && npm run test:format && npm run test:types",
     "test:format": "npm run prettier -- --check",
     "test:types": "tsc --noEmit",
@@ -28,6 +28,10 @@
     "@types/node": "^20.10.5",
     "@typescript-eslint/eslint-plugin": "^6.16.0",
     "@typescript-eslint/parser": "^6.16.0",
+    "aws-cdk": "^2.118.0",
+    "aws-cdk-lib": "^2.118.0",
+    "constructs": "^10.3.0",
+    "esbuild": "^0.19.11",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^9.1.0",
     "prettier": "3.1.1",
