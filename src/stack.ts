@@ -1,8 +1,9 @@
-import { Stack, StackProps } from "aws-cdk-lib";
+import { Duration, Stack, StackProps } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction, OutputFormat } from "aws-cdk-lib/aws-lambda-nodejs";
 import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Construct } from "constructs";
+import { getEnv } from "./utils.js";
 
 export class AppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -16,10 +17,15 @@ export class AppStack extends Stack {
         sourceMap: true,
         target: "es2022",
         format: OutputFormat.ESM,
+        banner:
+          "import { createRequire } from 'module';const require = createRequire(import.meta.url);",
       },
+      timeout: Duration.seconds(30),
       environment: {
         NODE_OPTIONS: "--enable-source-maps",
         NODE_ENV: "production",
+        NOTION_TOKEN: getEnv("NOTION_TOKEN"),
+        NOTION_PAGE_ID: getEnv("NOTION_PAGE_ID"),
       },
     });
 
