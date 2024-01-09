@@ -8,7 +8,7 @@ export class AppStack extends Stack {
     super(scope, id, props);
 
     new NodejsFunction(this, "handler", {
-      entry: "./dist/handler.js",
+      entry: "./dist/handler.mjs",
       runtime: Runtime.NODEJS_20_X,
       bundling: {
         minify: true,
