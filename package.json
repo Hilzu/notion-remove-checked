@@ -17,7 +17,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --ignore-path .gitignore .",
-    "start": "",
+    "start": "node --enable-source-maps --env-file .env .",
     "start:cdk": "node --enable-source-maps dist/cdk-app.js",
     "test": "npm run lint && npm run test:format && npm run test:types",
     "test:format": "npm run prettier -- --check",
@@ -26,6 +26,7 @@
     "tsc:watch": "tsc --watch"
   },
   "dependencies": {
+    "@notionhq/client": "^2.2.14",
     "aws-cdk-lib": "^2.118.0",
     "constructs": "^10.3.0"
   },
