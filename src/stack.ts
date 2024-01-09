@@ -1,8 +1,8 @@
 import { Stack, StackProps } from "aws-cdk-lib";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction, OutputFormat } from "aws-cdk-lib/aws-lambda-nodejs";
-import { Construct } from "constructs";
 import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
+import { Construct } from "constructs";
 
 export class AppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
