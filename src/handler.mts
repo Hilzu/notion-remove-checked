@@ -1,8 +1,8 @@
 // eslint-disable-next-line n/no-missing-import
-import type { Handler } from "aws-lambda";
+import type { ScheduledHandler } from "aws-lambda";
 import { removeCheckedItems } from "./notion.js";
 
-export const handler: Handler = async (event) => {
+export const handler: ScheduledHandler = async (event) => {
   console.log("event", event);
   await removeCheckedItems();
 };

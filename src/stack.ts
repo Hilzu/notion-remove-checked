@@ -1,4 +1,6 @@
 import { Duration, Stack, StackProps } from "aws-cdk-lib";
+import { Rule, Schedule } from "aws-cdk-lib/aws-events";
+import { LambdaFunction as LambdaFunctionTarget } from "aws-cdk-lib/aws-events-targets";
 import { Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction, OutputFormat } from "aws-cdk-lib/aws-lambda-nodejs";
 import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
@@ -9,7 +11,7 @@ export class AppStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const handler = new NodejsFunction(this, "handler", {
+    const handler = new NodejsFunction(this, "Handler", {
       entry: "./dist/handler.mjs",
       runtime: Runtime.NODEJS_20_X,
       bundling: {
@@ -33,5 +35,11 @@ export class AppStack extends Stack {
       logGroupName: `/aws/lambda/${handler.functionName}`,
       retention: RetentionDays.THIRTEEN_MONTHS,
     });
+
+    const schedule = Schedule.expression("cron(0 0 * * ? *)");
+
+    const rule = new Rule(this, "Rule", { schedule });
+
+    rule.addTarget(new LambdaFunctionTarget(handler));
   }
 }
